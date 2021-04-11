@@ -1,7 +1,10 @@
-import {GlobalStyle} from './styles/global';
-import {Header} from './components/Header';
+import { GlobalStyle } from './styles/global';
+import { Header } from './components/Header';
 import { createServer } from 'miragejs';
-import {Dashboard} from './components/Dashboard';
+import { Dashboard } from './components/Dashboard';
+import Modal from 'react-modal';
+import { useState } from 'react';
+import NewTransactionModal from './components/NewTransactionModal';
 
 createServer({
   routes() {
@@ -20,13 +23,26 @@ createServer({
       ]
     })
   }
-})
+});
+
+Modal.setAppElement('#root'); // For acessibility (written in docs).
 
 export function App() {
+
+  const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+
+  function handleOpenNewTransactionModal() {
+      setIsNewTransactionModalOpen(true);
+  }
+
+  function handleCloseNewTransactionModal() {
+      setIsNewTransactionModalOpen(false);
+  }
   return (
     <>
-      <Header />
+      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
       <Dashboard />
+      <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
       <GlobalStyle />
     </>
   );
