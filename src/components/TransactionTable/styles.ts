@@ -28,6 +28,9 @@ export const Container = styled.div`
             &.deposit {
                 color: var(--green);
             }
+            &.withdraw {
+                color: var(--red);
+            }
         }
     }
 `;
