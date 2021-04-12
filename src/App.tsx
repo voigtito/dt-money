@@ -5,9 +5,10 @@ import { Dashboard } from './components/Dashboard';
 import Modal from 'react-modal';
 import { useState } from 'react';
 import NewTransactionModal from './components/NewTransactionModal';
+import { TransactionsProvider } from './TransactionsContext';
 
 createServer({
-  
+
   models: {
     transaction: Model
   },
@@ -57,18 +58,20 @@ export function App() {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
 
   function handleOpenNewTransactionModal() {
-      setIsNewTransactionModalOpen(true);
+    setIsNewTransactionModalOpen(true);
   }
 
   function handleCloseNewTransactionModal() {
-      setIsNewTransactionModalOpen(false);
+    setIsNewTransactionModalOpen(false);
   }
   return (
     <>
-      <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
-      <Dashboard />
-      <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
-      <GlobalStyle />
+      <TransactionsProvider>
+        <Header onOpenNewTransactionModal={handleOpenNewTransactionModal} />
+        <Dashboard />
+        <NewTransactionModal isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
+        <GlobalStyle />
+      </TransactionsProvider>
     </>
   );
 };
